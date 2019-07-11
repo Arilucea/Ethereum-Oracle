@@ -5,7 +5,7 @@
 """
 import requests, json, os
 from web3 import Web3, HTTPProvider, WebsocketProvider
-from AbiCaptura import abiOracle
+from ContractAbi import abiOracle
 
 ConfigData = []
 with open("config.json", "r") as file:

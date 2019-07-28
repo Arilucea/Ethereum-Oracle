@@ -7,14 +7,17 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/big"
 	"net/http"
 	"os"
 	"strings"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 
 	contract "./OracleGo"
@@ -37,15 +40,12 @@ func main() {
 	oracleAddr := common.HexToAddress(config.OracleAddr)
 	addressesList := [2]common.Address{senderAddr, oracleAddr}
 
-	ctx, client, socket, nonce, oracleCont := networkInit(addressesList)
-
-	response(oracleCont, nonce)
-
-	captureEvents(ctx, oracleAddr, socket)
+	networkInit(addressesList)
 
 	balance, _ := client.BalanceAt(ctx, senderAddr, nil)
-
 	fmt.Println(balance)
+
+	captureEvents(ctx, oracleAddr, socket)
 
 }
 
@@ -57,22 +57,32 @@ func readConfig(fileName string, config *Configuration) {
 	json.NewDecoder(file).Decode(&config)
 }
 
+//Network values
+var ctx context.Context
+var client *ethclient.Client
+var socket *ethclient.Client
+var nonce uint64
+var oracleCont *contract.OracleGo
+
+var err error
+
 //--------------------------------- System init ---------------------------------//
-func networkInit(adresses [2]common.Address) (context.Context, *ethclient.Client, *ethclient.Client, uint64, *contract.OracleGo) {
-	ctx := context.Background()
+func networkInit(adresses [2]common.Address) {
+	ctx = context.Background()
 
 	rpcURL := config.RPCURL + os.Getenv("InfuraOracle")
-	client, err := ethclient.Dial(rpcURL)
+	client, err = ethclient.Dial(rpcURL)
 	fatalError("Error connecting to the network", err)
 
-	socket, err := ethclient.Dial(config.SocketURL)
+	socket, err = ethclient.Dial(config.SocketURL)
 	fatalError("Error connecting to the socket", err)
 
-	nonce, err := client.NonceAt(context.Background(), adresses[0], nil)
+	nonce, err = client.NonceAt(context.Background(), adresses[0], nil)
+	fatalError("Error reading nonce", err)
 
-	oracleCont, err := contract.NewOracleGo(adresses[1], client)
+	oracleCont, err = contract.NewOracleGo(adresses[1], client)
+	fatalError("Error initiating the contract", err)
 
-	return ctx, client, socket, nonce, oracleCont
 }
 
 //--------------------------------- Event elements ---------------------------------//
@@ -109,17 +119,20 @@ func captureEvents(ctx context.Context, oracleAddr common.Address, socket *ethcl
 			id := hex.EncodeToString(event.Id)
 			id = "0x" + id
 
-			parsePetition(string(event.Message[:]))
+			idB := []byte(id)
+			fmt.Println("IDb", idB)
+			answerVal := parsePetition(string(event.Message[:]))
 
 			fmt.Println(id)
 			fmt.Println(string(event.MType[:]))
 			fmt.Println(string(event.Message[:]))
+
+			sendResponse(client, oracleCont, nonce, event.Id, answerVal)
 		}
 	}
-
 }
 
-func parsePetition(url string) {
+func parsePetition(url string) string {
 
 	//-------------------- Event data process ----------------------------//
 	tmpSplit := strings.Split(url, "(")
@@ -158,19 +171,12 @@ func parsePetition(url string) {
 	}
 
 	fmt.Println("Acabado", string(value))
-
-	fmt.Println(params)
+	return (string(value))
 }
 
 func processParams(params string) []string {
 
 	paramsSplit := strings.Split(params, ".")
-
-	/*for _, item := range paramsSplit {
-		if strings.Index(item, "|") != -1 {
-			fmt.Println("---------")
-		}
-	}*/
 
 	//Check if the firs element of the parameters in the petition is a "."
 	if params[0] == byte(46) {
@@ -178,53 +184,31 @@ func processParams(params string) []string {
 	}
 
 	return paramsSplit
-
-	/*paramsSplit = params.split(".") #Split the string by the dots
-	  #Create an array of numbers and string based on the characters "|", "."
-	  for v in paramsSplit:
-	      if v.find("|") != -1:
-	          r = v.split("|")
-	          for i in range(len(r)):
-	              if (i==0  and v.find("|")!=0):
-	                  if (r[i]!=""):
-	                     paramsList.append(r[i])
-	              elif (i != 0 or v.find("|")==0):
-	                  if (r[i]!=""):
-	                      paramsList.append(int(r[i]))
-	      else:
-	          if (v!=""):
-	              paramsList.append(v)
-
-	  #Return the wanted value from the GET response based on the parameters of the event
-	  #response - json recover from the API
-	  #paramList - list of parameters from the event, to get the desired field of the API response
-	  value = response
-	  for item in paramsList:
-	      value = value[item]
-
-	  return(value)*/
-
 }
 
-func response(*contract.OracleGo, uint64) {
+func sendResponse(client *ethclient.Client, contract *contract.OracleGo, nonce uint64, petitionID []byte, value string) {
 
-	/*privateKey, err := crypto.HexToECDSA(os.Getenv("PK1"))
-	if err != nil {
-		log.Fatal(err)
-	}
+	privateKey, err := crypto.HexToECDSA(os.Getenv("PK1"))
+	printError("Error with reading private key", err)
 
-	publicKey := privateKey.Public()
-	publicKeyECDSA, ok := publicKey.(*ecdsa.PublicKey)
-	if !ok {
-		log.Fatal("cannot assert type: publicKey is not of type *ecdsa.PublicKey")
-	}
+	//nonce, err := client.PendingNonceAt(context.Background(), config.SenderAddr)
 
-	fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
+	gasPrice, err := client.SuggestGasPrice(ctx)
+	printError("Error gas price", err)
 
-	gasPrice, err := client.SuggestGasPrice(context.Background())
-	if err != nil {
-		log.Fatal(err)
-	}*/
+	auth := bind.NewKeyedTransactor(privateKey)
+	auth.Nonce = big.NewInt(int64(nonce))
+	auth.Value = big.NewInt(0)      // in wei
+	auth.GasLimit = uint64(3000000) // in units
+	auth.GasPrice = gasPrice
+
+	//Answer0 is the function to send strings, answer for bools and answer1 for ints
+	tx, err := contract.Answer0(auth, petitionID, value)
+	printError("Error response transaction", err)
+
+	nonce++
+
+	fmt.Printf("tx sent: %s", tx.Hash().Hex()) // tx sent: 0x8d490e535678e9a24360e955d75b27ad307bdfb97a1dca51d0f3035dcee3e870
 }
 
 func fatalError(msg string, err error) {

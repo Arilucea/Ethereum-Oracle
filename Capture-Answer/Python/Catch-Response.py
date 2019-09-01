@@ -8,7 +8,7 @@ from web3 import Web3, HTTPProvider, WebsocketProvider
 from ContractAbi import abiOracle
 
 ConfigData = []
-with open("config.json", "r") as file:
+with open("../config.json", "r") as file:
     ConfigData = json.load(file)
 
 #Establish connection with the network and the socket, API key for infura is on a enviaroment variable
@@ -127,4 +127,5 @@ log_loop(event_filter)
 "https://reqres.in/api/products/3(data.year)json"
 '''  
 "https://api.coinmarketcap.com/v1/ticker/ethereum(|0.price_usd)json"
+"https://api.coinbase.com/v2/prices/spot?currency=USD(.data.amount)json"
 '''

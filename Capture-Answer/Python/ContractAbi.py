@@ -10,6 +10,38 @@ def abiOracle():
 		"constant": "false",
 		"inputs": [
 			{
+				"name": "_newPrice",
+				"type": "uint256"
+			}
+		],
+		"name": "changePrize",
+		"outputs": [],
+		"payable": "false",
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": "false",
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "_state",
+				"type": "bool"
+			}
+		],
+		"name": "changeWhiteList",
+		"outputs": [],
+		"payable": "false",
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": "false",
+		"inputs": [
+			{
 				"name": "_message",
 				"type": "string"
 			},
@@ -20,41 +52,28 @@ def abiOracle():
 		],
 		"name": "makePetition",
 		"outputs": [],
-		"payable": "false",
-		"stateMutability": "nonpayable",
+		"payable": "true",
+		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
-		"constant": "false",
-		"inputs": [
+		"constant": "true",
+		"inputs": [],
+		"name": "price",
+		"outputs": [
 			{
-				"name": "_id",
-				"type": "bytes"
-			},
-			{
-				"name": "_value",
-				"type": "string"
-			}
-		],
-		"name": "answer",
-		"outputs": [],
-		"payable": "false",
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": "false",
-		"inputs": [
-			{
-				"name": "_id",
-				"type": "bytes"
-			},
-			{
-				"name": "_value",
+				"name": "",
 				"type": "uint256"
 			}
 		],
-		"name": "answer",
+		"payable": "false",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": "false",
+		"inputs": [],
+		"name": "getEth",
 		"outputs": [],
 		"payable": "false",
 		"stateMutability": "nonpayable",
@@ -71,8 +90,8 @@ def abiOracle():
 		"inputs": [
 			{
 				"indexed": "false",
-				"name": "id",
-				"type": "bytes"
+				"name": "caller",
+				"type": "address"
 			},
 			{
 				"indexed": "false",
@@ -87,6 +106,56 @@ def abiOracle():
 		],
 		"name": "Petition",
 		"type": "event"
+	}
+]
+    return abi
+
+
+
+
+def abiAnswer():
+    abi = [
+	{
+		"constant": "false",
+		"inputs": [
+			{
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "__callback",
+		"outputs": [],
+		"payable": "false",
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": "false",
+		"inputs": [
+			{
+				"name": "value",
+				"type": "bool"
+			}
+		],
+		"name": "__callback",
+		"outputs": [],
+		"payable": "false",
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": "false",
+		"inputs": [
+			{
+				"name": "value",
+				"type": "string"
+			}
+		],
+		"name": "__callback",
+		"outputs": [],
+		"payable": "false",
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ]
     return abi

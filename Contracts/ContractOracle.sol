@@ -11,16 +11,13 @@ contract OracleEj {
 
     Caller callerInt;
 
-    //Mapea el idUnico con la direccion que envia la peticion
-    mapping(bytes => address) Id_Sender;
-
     //Si true, direcciones autorizas a ejecutar llamadas sin necesidad de pagar
     mapping(address => bool) WhiteList;
 
     //Petititon cost
     uint256 public price = 0.00 ether;
 
-    event Petition(bytes id, string mType, string message);
+    event Petition(address caller, string mType, string message);
 
     constructor () public {
         owner = msg.sender;
@@ -32,44 +29,8 @@ contract OracleEj {
      * @param _type type of request
      */
     function makePetition(string memory _message, string memory _type) public payable isContract {
-        require(WhiteList[msg.sender] == true || msg.value >= price, "No enough value or white list");
-        bytes memory id = UniqueID();
-        Id_Sender[id] = msg.sender;
-        emit Petition(id, _type, _message);
-    }
-
-    //--------------------Answers---------------------//
-    /**
-     * @dev send the answer of the petition to the caller, case string
-     * @param _id unique id of the request
-     * @param _value answer
-     */
-    function answer(bytes memory _id, string memory _value) public onlyOwner {
-        address answerTo = Id_Sender[_id];
-        callerInt = Caller(answerTo);
-        callerInt.__callback(_value);
-    }
-
-    /**
-     * @dev send the answer of the petition to the caller, case uint
-     * @param _id unique id of the request
-     * @param _value answer
-     */
-    function answer(bytes memory _id, uint _value) public onlyOwner {
-        address answerTo = Id_Sender[_id];
-        callerInt = Caller(answerTo);
-        callerInt.__callback(_value);
-    }
-
-    /**
-     * @dev send the answer of the petition to the caller, case boolean
-     * @param _id unique id of the request
-     * @param _value answer
-     */
-    function answer(bytes memory _id, bool _value) public onlyOwner {
-        address answerTo = Id_Sender[_id];
-        callerInt = Caller(answerTo);
-        callerInt.__callback(_value);
+        require(WhiteList[msg.sender] == true || msg.value >= price, "No enough value or whitelist");
+        emit Petition(msg.sender, _type, _message);
     }
 
     /**
@@ -82,31 +43,6 @@ contract OracleEj {
     }
 
     //--------------------Utils---------------------//
-
-    /*TODO*/
-    //This uinque ID only handles one petition per address on each block
-
-    /**
-     * @dev make a unique ID for each petition by combianing the address of the caller and the timestamp
-     */
-    function UniqueID() internal view returns(bytes memory) {
-        bytes memory add = bytes(abi.encodePacked(msg.sender));
-        bytes memory time = bytes(abi.encodePacked(now));
-        string memory abcde = new string(add.length + (time.length-27));
-        bytes memory res = bytes(abcde);
-
-        uint i;
-        uint t;
-
-        for (i = 0; i<add.length; i++){
-            res[t++] = add[i];
-        }
-        for (i = 27; i<time.length; i++){
-            res[t++] = time[i];
-        }
-
-        return(res);
-    }
 
 
     //--------------------Modifiers---------------------//

@@ -5,7 +5,7 @@
 """
 import requests, json, os
 from web3 import Web3, HTTPProvider, WebsocketProvider
-from ContractAbi import abiOracle
+from ContractAbi import abiOracle, abiAnswer
 
 ConfigData = []
 with open("../config.json", "r") as file:
@@ -71,16 +71,14 @@ def proces(dataEvent):
         value = value[item]
         
     return(value)
-
 #Recover the unique ID from the event to identify the petition
-def recoverId(dataEvent):
+def recoverCaller(dataEvent):
     dataEvent = dataEvent[2:] #Trim the "0x"
     q32bytes = int(len(dataEvent)/64) #Split the chain in sets of 32bytes
     a = []
     for i in range(q32bytes):
         a.append(dataEvent[i*64:(i+1)*64])
-    
-    return("0x" + a[4][:50]) #Generate the unique ID
+    return("0x" + a[0][-40:]) #Generate the unique ID
 
 r = []
 def log_loop(event_filter):
@@ -94,15 +92,17 @@ def log_loop(event_filter):
                 #print(data)
                 
                 resp = proces(data)
-                idPeticion = recoverId(data)
+                addressCaller = recoverCaller(data)
                 #print(resp)
                 
                 #print(oracleCont.call().addSen(idPeticion))
                 if (type(resp) == float):
                     resp = int(resp)
                 
+                contractAnswer = w3.eth.contract(address=w3.toChecksumAddress(addressCaller), abi=abiAnswer())
+                
                 #Transaction answers
-                tx = oracleCont.functions.answer(idPeticion, resp).buildTransaction({
+                tx = contractAnswer.functions.__callback(resp).buildTransaction({
                         'gas': 4700000,
                         'gasPrice': w3.toWei("1", "gwei"),
                         'nonce': nonce})
@@ -116,7 +116,7 @@ def log_loop(event_filter):
         except Exception as e:
             print("Error for events", e)
             event_filter = oracleSocket.events.Petition.createFilter(fromBlock='latest')
-            
+
 
 
 print("Iniciando captura")

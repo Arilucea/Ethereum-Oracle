@@ -4,7 +4,7 @@ interface Oracle {
     function makePetition(string calldata _message, string calldata _type) external payable;
 }
 
-contract RequestExample {
+contract EjemploSolicitud {
 
     Oracle oracleInt;
     uint public datoInt;
@@ -15,41 +15,31 @@ contract RequestExample {
     constructor(address _oracle) public {
         oracleInt = Oracle(_oracle);
         owner = msg.sender;
+
     }
 
-    /**
-     * @dev make the request to the oracle
-     * @param _message information of the request
-     * @param _type type of request
-     */
+    //Ejecuta la peticion al oraculo
     function callInt(string memory _message, string memory _type) public payable {
         oracleInt.makePetition.value(msg.value)(_message, _type);
     }
 
-    /**
-     * @dev recieves the answer from the oracle
-     */
-    function __callback(string calldata value) external onlyOracle {
+    //Respuesta del oraculo, si la respuesta es una cadena
+    function __callback(string calldata value) external {
+        require(msg.sender == address(0x5Df13792d16D353e07db601560A55Df0ac498fD1), "No oracle");
         datoString = value;
     }
 
-    /**
-     * @dev recieves the answer from the oracle
-     */
-    function __callback(uint value) external onlyOracle {
+    //Respuesta del oraculo, si la respuesta es un entero
+    function __callback(uint value) external {
+        require(msg.sender == address(0x5Df13792d16D353e07db601560A55Df0ac498fD1), "No oracle");
         datoInt = value;
     }
-    /**
-     * @dev changes the oracle from the contract
-     */
+
     function changeOracle(address _oracle) public {
         require(msg.sender == owner, "Not the owner");
         oracleInt = Oracle(_oracle);
     }
 
-    modifier onlyOracle() {
-        require(msg.sender == address(oracleInt), "Not the oracle");
-        _;
-    }
-
 }
+
+//"https://api.coinbase.com/v2/prices/spot?currency=USD(.data.amount)json", "URL/GET"

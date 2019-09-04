@@ -1,7 +1,7 @@
 // Code generated - DO NOT EDIT.
 // This file is a generated binding and any manual changes will be lost.
 
-package oracleGo
+package oracle
 
 import (
 	"math/big"
@@ -27,107 +27,107 @@ var (
 	_ = event.NewSubscription
 )
 
-// OracleGoABI is the input ABI used to generate the binding from.
-const OracleGoABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_newPrice\",\"type\":\"uint256\"}],\"name\":\"changePrize\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_address\",\"type\":\"address\"},{\"name\":\"_state\",\"type\":\"bool\"}],\"name\":\"changeWhiteList\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_message\",\"type\":\"string\"},{\"name\":\"_type\",\"type\":\"string\"}],\"name\":\"makePetition\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"price\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_id\",\"type\":\"bytes\"},{\"name\":\"_value\",\"type\":\"string\"}],\"name\":\"answer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"getEth\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_id\",\"type\":\"bytes\"},{\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"answer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"id\",\"type\":\"bytes\"},{\"indexed\":false,\"name\":\"mType\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"message\",\"type\":\"string\"}],\"name\":\"Petition\",\"type\":\"event\"}]"
+// OracleABI is the input ABI used to generate the binding from.
+const OracleABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"_newPrice\",\"type\":\"uint256\"}],\"name\":\"changePrize\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_address\",\"type\":\"address\"},{\"name\":\"_state\",\"type\":\"bool\"}],\"name\":\"changeWhiteList\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_message\",\"type\":\"string\"},{\"name\":\"_type\",\"type\":\"string\"}],\"name\":\"makePetition\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"price\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"getEth\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"caller\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"mType\",\"type\":\"string\"},{\"indexed\":false,\"name\":\"message\",\"type\":\"string\"}],\"name\":\"Petition\",\"type\":\"event\"}]"
 
-// OracleGo is an auto generated Go binding around an Ethereum contract.
-type OracleGo struct {
-	OracleGoCaller     // Read-only binding to the contract
-	OracleGoTransactor // Write-only binding to the contract
-	OracleGoFilterer   // Log filterer for contract events
+// Oracle is an auto generated Go binding around an Ethereum contract.
+type Oracle struct {
+	OracleCaller     // Read-only binding to the contract
+	OracleTransactor // Write-only binding to the contract
+	OracleFilterer   // Log filterer for contract events
 }
 
-// OracleGoCaller is an auto generated read-only Go binding around an Ethereum contract.
-type OracleGoCaller struct {
+// OracleCaller is an auto generated read-only Go binding around an Ethereum contract.
+type OracleCaller struct {
 	contract *bind.BoundContract // Generic contract wrapper for the low level calls
 }
 
-// OracleGoTransactor is an auto generated write-only Go binding around an Ethereum contract.
-type OracleGoTransactor struct {
+// OracleTransactor is an auto generated write-only Go binding around an Ethereum contract.
+type OracleTransactor struct {
 	contract *bind.BoundContract // Generic contract wrapper for the low level calls
 }
 
-// OracleGoFilterer is an auto generated log filtering Go binding around an Ethereum contract events.
-type OracleGoFilterer struct {
+// OracleFilterer is an auto generated log filtering Go binding around an Ethereum contract events.
+type OracleFilterer struct {
 	contract *bind.BoundContract // Generic contract wrapper for the low level calls
 }
 
-// OracleGoSession is an auto generated Go binding around an Ethereum contract,
+// OracleSession is an auto generated Go binding around an Ethereum contract,
 // with pre-set call and transact options.
-type OracleGoSession struct {
-	Contract     *OracleGo         // Generic contract binding to set the session for
+type OracleSession struct {
+	Contract     *Oracle           // Generic contract binding to set the session for
 	CallOpts     bind.CallOpts     // Call options to use throughout this session
 	TransactOpts bind.TransactOpts // Transaction auth options to use throughout this session
 }
 
-// OracleGoCallerSession is an auto generated read-only Go binding around an Ethereum contract,
+// OracleCallerSession is an auto generated read-only Go binding around an Ethereum contract,
 // with pre-set call options.
-type OracleGoCallerSession struct {
-	Contract *OracleGoCaller // Generic contract caller binding to set the session for
-	CallOpts bind.CallOpts   // Call options to use throughout this session
+type OracleCallerSession struct {
+	Contract *OracleCaller // Generic contract caller binding to set the session for
+	CallOpts bind.CallOpts // Call options to use throughout this session
 }
 
-// OracleGoTransactorSession is an auto generated write-only Go binding around an Ethereum contract,
+// OracleTransactorSession is an auto generated write-only Go binding around an Ethereum contract,
 // with pre-set transact options.
-type OracleGoTransactorSession struct {
-	Contract     *OracleGoTransactor // Generic contract transactor binding to set the session for
-	TransactOpts bind.TransactOpts   // Transaction auth options to use throughout this session
+type OracleTransactorSession struct {
+	Contract     *OracleTransactor // Generic contract transactor binding to set the session for
+	TransactOpts bind.TransactOpts // Transaction auth options to use throughout this session
 }
 
-// OracleGoRaw is an auto generated low-level Go binding around an Ethereum contract.
-type OracleGoRaw struct {
-	Contract *OracleGo // Generic contract binding to access the raw methods on
+// OracleRaw is an auto generated low-level Go binding around an Ethereum contract.
+type OracleRaw struct {
+	Contract *Oracle // Generic contract binding to access the raw methods on
 }
 
-// OracleGoCallerRaw is an auto generated low-level read-only Go binding around an Ethereum contract.
-type OracleGoCallerRaw struct {
-	Contract *OracleGoCaller // Generic read-only contract binding to access the raw methods on
+// OracleCallerRaw is an auto generated low-level read-only Go binding around an Ethereum contract.
+type OracleCallerRaw struct {
+	Contract *OracleCaller // Generic read-only contract binding to access the raw methods on
 }
 
-// OracleGoTransactorRaw is an auto generated low-level write-only Go binding around an Ethereum contract.
-type OracleGoTransactorRaw struct {
-	Contract *OracleGoTransactor // Generic write-only contract binding to access the raw methods on
+// OracleTransactorRaw is an auto generated low-level write-only Go binding around an Ethereum contract.
+type OracleTransactorRaw struct {
+	Contract *OracleTransactor // Generic write-only contract binding to access the raw methods on
 }
 
-// NewOracleGo creates a new instance of OracleGo, bound to a specific deployed contract.
-func NewOracleGo(address common.Address, backend bind.ContractBackend) (*OracleGo, error) {
-	contract, err := bindOracleGo(address, backend, backend, backend)
+// NewOracle creates a new instance of Oracle, bound to a specific deployed contract.
+func NewOracle(address common.Address, backend bind.ContractBackend) (*Oracle, error) {
+	contract, err := bindOracle(address, backend, backend, backend)
 	if err != nil {
 		return nil, err
 	}
-	return &OracleGo{OracleGoCaller: OracleGoCaller{contract: contract}, OracleGoTransactor: OracleGoTransactor{contract: contract}, OracleGoFilterer: OracleGoFilterer{contract: contract}}, nil
+	return &Oracle{OracleCaller: OracleCaller{contract: contract}, OracleTransactor: OracleTransactor{contract: contract}, OracleFilterer: OracleFilterer{contract: contract}}, nil
 }
 
-// NewOracleGoCaller creates a new read-only instance of OracleGo, bound to a specific deployed contract.
-func NewOracleGoCaller(address common.Address, caller bind.ContractCaller) (*OracleGoCaller, error) {
-	contract, err := bindOracleGo(address, caller, nil, nil)
+// NewOracleCaller creates a new read-only instance of Oracle, bound to a specific deployed contract.
+func NewOracleCaller(address common.Address, caller bind.ContractCaller) (*OracleCaller, error) {
+	contract, err := bindOracle(address, caller, nil, nil)
 	if err != nil {
 		return nil, err
 	}
-	return &OracleGoCaller{contract: contract}, nil
+	return &OracleCaller{contract: contract}, nil
 }
 
-// NewOracleGoTransactor creates a new write-only instance of OracleGo, bound to a specific deployed contract.
-func NewOracleGoTransactor(address common.Address, transactor bind.ContractTransactor) (*OracleGoTransactor, error) {
-	contract, err := bindOracleGo(address, nil, transactor, nil)
+// NewOracleTransactor creates a new write-only instance of Oracle, bound to a specific deployed contract.
+func NewOracleTransactor(address common.Address, transactor bind.ContractTransactor) (*OracleTransactor, error) {
+	contract, err := bindOracle(address, nil, transactor, nil)
 	if err != nil {
 		return nil, err
 	}
-	return &OracleGoTransactor{contract: contract}, nil
+	return &OracleTransactor{contract: contract}, nil
 }
 
-// NewOracleGoFilterer creates a new log filterer instance of OracleGo, bound to a specific deployed contract.
-func NewOracleGoFilterer(address common.Address, filterer bind.ContractFilterer) (*OracleGoFilterer, error) {
-	contract, err := bindOracleGo(address, nil, nil, filterer)
+// NewOracleFilterer creates a new log filterer instance of Oracle, bound to a specific deployed contract.
+func NewOracleFilterer(address common.Address, filterer bind.ContractFilterer) (*OracleFilterer, error) {
+	contract, err := bindOracle(address, nil, nil, filterer)
 	if err != nil {
 		return nil, err
 	}
-	return &OracleGoFilterer{contract: contract}, nil
+	return &OracleFilterer{contract: contract}, nil
 }
 
-// bindOracleGo binds a generic wrapper to an already deployed contract.
-func bindOracleGo(address common.Address, caller bind.ContractCaller, transactor bind.ContractTransactor, filterer bind.ContractFilterer) (*bind.BoundContract, error) {
-	parsed, err := abi.JSON(strings.NewReader(OracleGoABI))
+// bindOracle binds a generic wrapper to an already deployed contract.
+func bindOracle(address common.Address, caller bind.ContractCaller, transactor bind.ContractTransactor, filterer bind.ContractFilterer) (*bind.BoundContract, error) {
+	parsed, err := abi.JSON(strings.NewReader(OracleABI))
 	if err != nil {
 		return nil, err
 	}
@@ -138,216 +138,153 @@ func bindOracleGo(address common.Address, caller bind.ContractCaller, transactor
 // sets the output to result. The result type might be a single field for simple
 // returns, a slice of interfaces for anonymous returns and a struct for named
 // returns.
-func (_OracleGo *OracleGoRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
-	return _OracleGo.Contract.OracleGoCaller.contract.Call(opts, result, method, params...)
+func (_Oracle *OracleRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+	return _Oracle.Contract.OracleCaller.contract.Call(opts, result, method, params...)
 }
 
 // Transfer initiates a plain transaction to move funds to the contract, calling
 // its default method if one is available.
-func (_OracleGo *OracleGoRaw) Transfer(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _OracleGo.Contract.OracleGoTransactor.contract.Transfer(opts)
+func (_Oracle *OracleRaw) Transfer(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Oracle.Contract.OracleTransactor.contract.Transfer(opts)
 }
 
 // Transact invokes the (paid) contract method with params as input values.
-func (_OracleGo *OracleGoRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
-	return _OracleGo.Contract.OracleGoTransactor.contract.Transact(opts, method, params...)
+func (_Oracle *OracleRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
+	return _Oracle.Contract.OracleTransactor.contract.Transact(opts, method, params...)
 }
 
 // Call invokes the (constant) contract method with params as input values and
 // sets the output to result. The result type might be a single field for simple
 // returns, a slice of interfaces for anonymous returns and a struct for named
 // returns.
-func (_OracleGo *OracleGoCallerRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
-	return _OracleGo.Contract.contract.Call(opts, result, method, params...)
+func (_Oracle *OracleCallerRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+	return _Oracle.Contract.contract.Call(opts, result, method, params...)
 }
 
 // Transfer initiates a plain transaction to move funds to the contract, calling
 // its default method if one is available.
-func (_OracleGo *OracleGoTransactorRaw) Transfer(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _OracleGo.Contract.contract.Transfer(opts)
+func (_Oracle *OracleTransactorRaw) Transfer(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Oracle.Contract.contract.Transfer(opts)
 }
 
 // Transact invokes the (paid) contract method with params as input values.
-func (_OracleGo *OracleGoTransactorRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
-	return _OracleGo.Contract.contract.Transact(opts, method, params...)
+func (_Oracle *OracleTransactorRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
+	return _Oracle.Contract.contract.Transact(opts, method, params...)
 }
 
 // Price is a free data retrieval call binding the contract method 0xa035b1fe.
 //
 // Solidity: function price() constant returns(uint256)
-func (_OracleGo *OracleGoCaller) Price(opts *bind.CallOpts) (*big.Int, error) {
+func (_Oracle *OracleCaller) Price(opts *bind.CallOpts) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
 	)
 	out := ret0
-	err := _OracleGo.contract.Call(opts, out, "price")
+	err := _Oracle.contract.Call(opts, out, "price")
 	return *ret0, err
 }
 
 // Price is a free data retrieval call binding the contract method 0xa035b1fe.
 //
 // Solidity: function price() constant returns(uint256)
-func (_OracleGo *OracleGoSession) Price() (*big.Int, error) {
-	return _OracleGo.Contract.Price(&_OracleGo.CallOpts)
+func (_Oracle *OracleSession) Price() (*big.Int, error) {
+	return _Oracle.Contract.Price(&_Oracle.CallOpts)
 }
 
 // Price is a free data retrieval call binding the contract method 0xa035b1fe.
 //
 // Solidity: function price() constant returns(uint256)
-func (_OracleGo *OracleGoCallerSession) Price() (*big.Int, error) {
-	return _OracleGo.Contract.Price(&_OracleGo.CallOpts)
-}
-
-// Answer is a paid mutator transaction binding the contract method 0x30655be8.
-//
-// Solidity: function answer(bytes _id, bool _value) returns()
-func (_OracleGo *OracleGoTransactor) Answer(opts *bind.TransactOpts, _id []byte, _value bool) (*types.Transaction, error) {
-	return _OracleGo.contract.Transact(opts, "answer", _id, _value)
-}
-
-// Answer is a paid mutator transaction binding the contract method 0x30655be8.
-//
-// Solidity: function answer(bytes _id, bool _value) returns()
-func (_OracleGo *OracleGoSession) Answer(_id []byte, _value bool) (*types.Transaction, error) {
-	return _OracleGo.Contract.Answer(&_OracleGo.TransactOpts, _id, _value)
-}
-
-// Answer is a paid mutator transaction binding the contract method 0x30655be8.
-//
-// Solidity: function answer(bytes _id, bool _value) returns()
-func (_OracleGo *OracleGoTransactorSession) Answer(_id []byte, _value bool) (*types.Transaction, error) {
-	return _OracleGo.Contract.Answer(&_OracleGo.TransactOpts, _id, _value)
-}
-
-// Answer0 is a paid mutator transaction binding the contract method 0x1e21ee3c.
-//
-// Solidity: function answer0(bytes _id, string _value) returns()
-func (_OracleGo *OracleGoTransactor) Answer0(opts *bind.TransactOpts, _id []byte, _value string) (*types.Transaction, error) {
-	return _OracleGo.contract.Transact(opts, "answer", _id, _value)
-}
-
-// Answer0 is a paid mutator transaction binding the contract method 0x1e21ee3c.
-//
-// Solidity: function answer0(bytes _id, string _value) returns()
-func (_OracleGo *OracleGoSession) Answer0(_id []byte, _value string) (*types.Transaction, error) {
-	return _OracleGo.Contract.Answer0(&_OracleGo.TransactOpts, _id, _value)
-}
-
-// Answer0 is a paid mutator transaction binding the contract method 0x1e21ee3c.
-//
-// Solidity: function answer0(bytes _id, string _value) returns()
-func (_OracleGo *OracleGoTransactorSession) Answer0(_id []byte, _value string) (*types.Transaction, error) {
-	return _OracleGo.Contract.Answer0(&_OracleGo.TransactOpts, _id, _value)
-}
-
-// Answer1 is a paid mutator transaction binding the contract method 0x62a4950c.
-//
-// Solidity: function answer1(bytes _id, uint256 _value) returns()
-func (_OracleGo *OracleGoTransactor) Answer1(opts *bind.TransactOpts, _id []byte, _value *big.Int) (*types.Transaction, error) {
-	return _OracleGo.contract.Transact(opts, "answer1", _id, _value)
-}
-
-// Answer1 is a paid mutator transaction binding the contract method 0x62a4950c.
-//
-// Solidity: function answer1(bytes _id, uint256 _value) returns()
-func (_OracleGo *OracleGoSession) Answer1(_id []byte, _value *big.Int) (*types.Transaction, error) {
-	return _OracleGo.Contract.Answer1(&_OracleGo.TransactOpts, _id, _value)
-}
-
-// Answer1 is a paid mutator transaction binding the contract method 0x62a4950c.
-//
-// Solidity: function answer1(bytes _id, uint256 _value) returns()
-func (_OracleGo *OracleGoTransactorSession) Answer1(_id []byte, _value *big.Int) (*types.Transaction, error) {
-	return _OracleGo.Contract.Answer1(&_OracleGo.TransactOpts, _id, _value)
+func (_Oracle *OracleCallerSession) Price() (*big.Int, error) {
+	return _Oracle.Contract.Price(&_Oracle.CallOpts)
 }
 
 // ChangePrize is a paid mutator transaction binding the contract method 0x074cb69f.
 //
 // Solidity: function changePrize(uint256 _newPrice) returns()
-func (_OracleGo *OracleGoTransactor) ChangePrize(opts *bind.TransactOpts, _newPrice *big.Int) (*types.Transaction, error) {
-	return _OracleGo.contract.Transact(opts, "changePrize", _newPrice)
+func (_Oracle *OracleTransactor) ChangePrize(opts *bind.TransactOpts, _newPrice *big.Int) (*types.Transaction, error) {
+	return _Oracle.contract.Transact(opts, "changePrize", _newPrice)
 }
 
 // ChangePrize is a paid mutator transaction binding the contract method 0x074cb69f.
 //
 // Solidity: function changePrize(uint256 _newPrice) returns()
-func (_OracleGo *OracleGoSession) ChangePrize(_newPrice *big.Int) (*types.Transaction, error) {
-	return _OracleGo.Contract.ChangePrize(&_OracleGo.TransactOpts, _newPrice)
+func (_Oracle *OracleSession) ChangePrize(_newPrice *big.Int) (*types.Transaction, error) {
+	return _Oracle.Contract.ChangePrize(&_Oracle.TransactOpts, _newPrice)
 }
 
 // ChangePrize is a paid mutator transaction binding the contract method 0x074cb69f.
 //
 // Solidity: function changePrize(uint256 _newPrice) returns()
-func (_OracleGo *OracleGoTransactorSession) ChangePrize(_newPrice *big.Int) (*types.Transaction, error) {
-	return _OracleGo.Contract.ChangePrize(&_OracleGo.TransactOpts, _newPrice)
+func (_Oracle *OracleTransactorSession) ChangePrize(_newPrice *big.Int) (*types.Transaction, error) {
+	return _Oracle.Contract.ChangePrize(&_Oracle.TransactOpts, _newPrice)
 }
 
 // ChangeWhiteList is a paid mutator transaction binding the contract method 0x39b417b7.
 //
 // Solidity: function changeWhiteList(address _address, bool _state) returns()
-func (_OracleGo *OracleGoTransactor) ChangeWhiteList(opts *bind.TransactOpts, _address common.Address, _state bool) (*types.Transaction, error) {
-	return _OracleGo.contract.Transact(opts, "changeWhiteList", _address, _state)
+func (_Oracle *OracleTransactor) ChangeWhiteList(opts *bind.TransactOpts, _address common.Address, _state bool) (*types.Transaction, error) {
+	return _Oracle.contract.Transact(opts, "changeWhiteList", _address, _state)
 }
 
 // ChangeWhiteList is a paid mutator transaction binding the contract method 0x39b417b7.
 //
 // Solidity: function changeWhiteList(address _address, bool _state) returns()
-func (_OracleGo *OracleGoSession) ChangeWhiteList(_address common.Address, _state bool) (*types.Transaction, error) {
-	return _OracleGo.Contract.ChangeWhiteList(&_OracleGo.TransactOpts, _address, _state)
+func (_Oracle *OracleSession) ChangeWhiteList(_address common.Address, _state bool) (*types.Transaction, error) {
+	return _Oracle.Contract.ChangeWhiteList(&_Oracle.TransactOpts, _address, _state)
 }
 
 // ChangeWhiteList is a paid mutator transaction binding the contract method 0x39b417b7.
 //
 // Solidity: function changeWhiteList(address _address, bool _state) returns()
-func (_OracleGo *OracleGoTransactorSession) ChangeWhiteList(_address common.Address, _state bool) (*types.Transaction, error) {
-	return _OracleGo.Contract.ChangeWhiteList(&_OracleGo.TransactOpts, _address, _state)
+func (_Oracle *OracleTransactorSession) ChangeWhiteList(_address common.Address, _state bool) (*types.Transaction, error) {
+	return _Oracle.Contract.ChangeWhiteList(&_Oracle.TransactOpts, _address, _state)
 }
 
 // GetEth is a paid mutator transaction binding the contract method 0xcb05b93e.
 //
 // Solidity: function getEth() returns()
-func (_OracleGo *OracleGoTransactor) GetEth(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _OracleGo.contract.Transact(opts, "getEth")
+func (_Oracle *OracleTransactor) GetEth(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Oracle.contract.Transact(opts, "getEth")
 }
 
 // GetEth is a paid mutator transaction binding the contract method 0xcb05b93e.
 //
 // Solidity: function getEth() returns()
-func (_OracleGo *OracleGoSession) GetEth() (*types.Transaction, error) {
-	return _OracleGo.Contract.GetEth(&_OracleGo.TransactOpts)
+func (_Oracle *OracleSession) GetEth() (*types.Transaction, error) {
+	return _Oracle.Contract.GetEth(&_Oracle.TransactOpts)
 }
 
 // GetEth is a paid mutator transaction binding the contract method 0xcb05b93e.
 //
 // Solidity: function getEth() returns()
-func (_OracleGo *OracleGoTransactorSession) GetEth() (*types.Transaction, error) {
-	return _OracleGo.Contract.GetEth(&_OracleGo.TransactOpts)
+func (_Oracle *OracleTransactorSession) GetEth() (*types.Transaction, error) {
+	return _Oracle.Contract.GetEth(&_Oracle.TransactOpts)
 }
 
 // MakePetition is a paid mutator transaction binding the contract method 0x4d3044fe.
 //
 // Solidity: function makePetition(string _message, string _type) returns()
-func (_OracleGo *OracleGoTransactor) MakePetition(opts *bind.TransactOpts, _message string, _type string) (*types.Transaction, error) {
-	return _OracleGo.contract.Transact(opts, "makePetition", _message, _type)
+func (_Oracle *OracleTransactor) MakePetition(opts *bind.TransactOpts, _message string, _type string) (*types.Transaction, error) {
+	return _Oracle.contract.Transact(opts, "makePetition", _message, _type)
 }
 
 // MakePetition is a paid mutator transaction binding the contract method 0x4d3044fe.
 //
 // Solidity: function makePetition(string _message, string _type) returns()
-func (_OracleGo *OracleGoSession) MakePetition(_message string, _type string) (*types.Transaction, error) {
-	return _OracleGo.Contract.MakePetition(&_OracleGo.TransactOpts, _message, _type)
+func (_Oracle *OracleSession) MakePetition(_message string, _type string) (*types.Transaction, error) {
+	return _Oracle.Contract.MakePetition(&_Oracle.TransactOpts, _message, _type)
 }
 
 // MakePetition is a paid mutator transaction binding the contract method 0x4d3044fe.
 //
 // Solidity: function makePetition(string _message, string _type) returns()
-func (_OracleGo *OracleGoTransactorSession) MakePetition(_message string, _type string) (*types.Transaction, error) {
-	return _OracleGo.Contract.MakePetition(&_OracleGo.TransactOpts, _message, _type)
+func (_Oracle *OracleTransactorSession) MakePetition(_message string, _type string) (*types.Transaction, error) {
+	return _Oracle.Contract.MakePetition(&_Oracle.TransactOpts, _message, _type)
 }
 
-// OracleGoPetitionIterator is returned from FilterPetition and is used to iterate over the raw logs and unpacked data for Petition events raised by the OracleGo contract.
-type OracleGoPetitionIterator struct {
-	Event *OracleGoPetition // Event containing the contract specifics and raw log
+// OraclePetitionIterator is returned from FilterPetition and is used to iterate over the raw logs and unpacked data for Petition events raised by the Oracle contract.
+type OraclePetitionIterator struct {
+	Event *OraclePetition // Event containing the contract specifics and raw log
 
 	contract *bind.BoundContract // Generic contract to use for unpacking event data
 	event    string              // Event name to use for unpacking event data
@@ -361,7 +298,7 @@ type OracleGoPetitionIterator struct {
 // Next advances the iterator to the subsequent event, returning whether there
 // are any more events found. In case of a retrieval or parsing error, false is
 // returned and Error() can be queried for the exact failure.
-func (it *OracleGoPetitionIterator) Next() bool {
+func (it *OraclePetitionIterator) Next() bool {
 	// If the iterator failed, stop iterating
 	if it.fail != nil {
 		return false
@@ -370,7 +307,7 @@ func (it *OracleGoPetitionIterator) Next() bool {
 	if it.done {
 		select {
 		case log := <-it.logs:
-			it.Event = new(OracleGoPetition)
+			it.Event = new(OraclePetition)
 			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 				it.fail = err
 				return false
@@ -385,7 +322,7 @@ func (it *OracleGoPetitionIterator) Next() bool {
 	// Iterator still in progress, wait for either a data or an error event
 	select {
 	case log := <-it.logs:
-		it.Event = new(OracleGoPetition)
+		it.Event = new(OraclePetition)
 		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 			it.fail = err
 			return false
@@ -401,43 +338,43 @@ func (it *OracleGoPetitionIterator) Next() bool {
 }
 
 // Error returns any retrieval or parsing error occurred during filtering.
-func (it *OracleGoPetitionIterator) Error() error {
+func (it *OraclePetitionIterator) Error() error {
 	return it.fail
 }
 
 // Close terminates the iteration process, releasing any pending underlying
 // resources.
-func (it *OracleGoPetitionIterator) Close() error {
+func (it *OraclePetitionIterator) Close() error {
 	it.sub.Unsubscribe()
 	return nil
 }
 
-// OracleGoPetition represents a Petition event raised by the OracleGo contract.
-type OracleGoPetition struct {
-	Id      []byte
+// OraclePetition represents a Petition event raised by the Oracle contract.
+type OraclePetition struct {
+	Caller  common.Address
 	MType   string
 	Message string
 	Raw     types.Log // Blockchain specific contextual infos
 }
 
-// FilterPetition is a free log retrieval operation binding the contract event 0xbd8b7313fd1af282e2644201bb3dd87abc00cf6d8e512d120ae3be15bc2066ab.
+// FilterPetition is a free log retrieval operation binding the contract event 0xc659bc090075346ac7a96402907b87a7f9b4292b51589a09794a3e6e649d1e2a.
 //
-// Solidity: event Petition(bytes id, string mType, string message)
-func (_OracleGo *OracleGoFilterer) FilterPetition(opts *bind.FilterOpts) (*OracleGoPetitionIterator, error) {
+// Solidity: event Petition(address caller, string mType, string message)
+func (_Oracle *OracleFilterer) FilterPetition(opts *bind.FilterOpts) (*OraclePetitionIterator, error) {
 
-	logs, sub, err := _OracleGo.contract.FilterLogs(opts, "Petition")
+	logs, sub, err := _Oracle.contract.FilterLogs(opts, "Petition")
 	if err != nil {
 		return nil, err
 	}
-	return &OracleGoPetitionIterator{contract: _OracleGo.contract, event: "Petition", logs: logs, sub: sub}, nil
+	return &OraclePetitionIterator{contract: _Oracle.contract, event: "Petition", logs: logs, sub: sub}, nil
 }
 
-// WatchPetition is a free log subscription operation binding the contract event 0xbd8b7313fd1af282e2644201bb3dd87abc00cf6d8e512d120ae3be15bc2066ab.
+// WatchPetition is a free log subscription operation binding the contract event 0xc659bc090075346ac7a96402907b87a7f9b4292b51589a09794a3e6e649d1e2a.
 //
-// Solidity: event Petition(bytes id, string mType, string message)
-func (_OracleGo *OracleGoFilterer) WatchPetition(opts *bind.WatchOpts, sink chan<- *OracleGoPetition) (event.Subscription, error) {
+// Solidity: event Petition(address caller, string mType, string message)
+func (_Oracle *OracleFilterer) WatchPetition(opts *bind.WatchOpts, sink chan<- *OraclePetition) (event.Subscription, error) {
 
-	logs, sub, err := _OracleGo.contract.WatchLogs(opts, "Petition")
+	logs, sub, err := _Oracle.contract.WatchLogs(opts, "Petition")
 	if err != nil {
 		return nil, err
 	}
@@ -447,8 +384,8 @@ func (_OracleGo *OracleGoFilterer) WatchPetition(opts *bind.WatchOpts, sink chan
 			select {
 			case log := <-logs:
 				// New log arrived, parse the event and forward to the user
-				event := new(OracleGoPetition)
-				if err := _OracleGo.contract.UnpackLog(event, "Petition", log); err != nil {
+				event := new(OraclePetition)
+				if err := _Oracle.contract.UnpackLog(event, "Petition", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -469,12 +406,12 @@ func (_OracleGo *OracleGoFilterer) WatchPetition(opts *bind.WatchOpts, sink chan
 	}), nil
 }
 
-// ParsePetition is a log parse operation binding the contract event 0xbd8b7313fd1af282e2644201bb3dd87abc00cf6d8e512d120ae3be15bc2066ab.
+// ParsePetition is a log parse operation binding the contract event 0xc659bc090075346ac7a96402907b87a7f9b4292b51589a09794a3e6e649d1e2a.
 //
-// Solidity: event Petition(bytes id, string mType, string message)
-func (_OracleGo *OracleGoFilterer) ParsePetition(log types.Log) (*OracleGoPetition, error) {
-	event := new(OracleGoPetition)
-	if err := _OracleGo.contract.UnpackLog(event, "Petition", log); err != nil {
+// Solidity: event Petition(address caller, string mType, string message)
+func (_Oracle *OracleFilterer) ParsePetition(log types.Log) (*OraclePetition, error) {
+	event := new(OraclePetition)
+	if err := _Oracle.contract.UnpackLog(event, "Petition", log); err != nil {
 		return nil, err
 	}
 	return event, nil

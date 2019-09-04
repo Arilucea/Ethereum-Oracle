@@ -1,11 +1,5 @@
 pragma solidity ^0.5.1;
 
-interface Caller {
-    function __callback(string calldata value) external;
-    function __callback(uint value) external;
-    function __callback(bool value) external;
-}
-
 contract OracleEj {
     address payable owner;
 

@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -20,6 +19,7 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 
+	contractCaller "./CallerGo"
 	contract "./OracleGo"
 )
 
@@ -62,7 +62,7 @@ var ctx context.Context
 var client *ethclient.Client
 var socket *ethclient.Client
 var nonce uint64
-var oracleCont *contract.OracleGo
+var oracleCont *contract.Oracle
 
 var err error
 
@@ -80,14 +80,14 @@ func networkInit(adresses [2]common.Address) {
 	nonce, err = client.NonceAt(context.Background(), adresses[0], nil)
 	fatalError("Error reading nonce", err)
 
-	oracleCont, err = contract.NewOracleGo(adresses[1], client)
+	oracleCont, err = contract.NewOracle(adresses[1], client)
 	fatalError("Error initiating the contract", err)
 
 }
 
 //--------------------------------- Event elements ---------------------------------//
 type eventFormat struct {
-	Id      []byte
+	Caller  common.Address
 	MType   string
 	Message string
 }
@@ -102,7 +102,7 @@ func captureEvents(ctx context.Context, oracleAddr common.Address, socket *ethcl
 	logs := make(chan types.Log)
 	SubEvent, err := socket.SubscribeFilterLogs(ctx, query, logs)
 
-	contractAbi, err := abi.JSON(strings.NewReader(contract.OracleGoABI))
+	contractAbi, err := abi.JSON(strings.NewReader(contract.OracleABI))
 	fatalError("Abi problem", err)
 
 	fmt.Println("System initiated")
@@ -113,21 +113,12 @@ func captureEvents(ctx context.Context, oracleAddr common.Address, socket *ethcl
 			log.Println(err)
 		case vLog := <-logs:
 			err := contractAbi.Unpack(&event, "Petition", vLog.Data)
-
 			printError("Error parsing event", err)
 
-			id := hex.EncodeToString(event.Id)
-			id = "0x" + id
-
-			idB := []byte(id)
-			fmt.Println("IDb", idB)
 			answerVal := parsePetition(string(event.Message[:]))
-
-			fmt.Println(id)
-			fmt.Println(string(event.MType[:]))
-			fmt.Println(string(event.Message[:]))
-
-			sendResponse(client, oracleCont, nonce, event.Id, answerVal)
+			//v, _ := strconv.Atoi(answerVal)
+			//v2 := big.NewInt(int64(v))
+			sendResponse(client, oracleCont, nonce, event.Caller, answerVal, config)
 		}
 	}
 }
@@ -186,12 +177,12 @@ func processParams(params string) []string {
 	return paramsSplit
 }
 
-func sendResponse(client *ethclient.Client, contract *contract.OracleGo, nonce uint64, petitionID []byte, value string) {
+func sendResponse(client *ethclient.Client, contract *contract.Oracle, nonce uint64, callerAddress common.Address, value interface{}, config Configuration) {
 
 	privateKey, err := crypto.HexToECDSA(os.Getenv("PK1"))
 	printError("Error with reading private key", err)
 
-	//nonce, err := client.PendingNonceAt(context.Background(), config.SenderAddr)
+	nonce, _ = client.PendingNonceAt(context.Background(), common.HexToAddress(config.SenderAddr))
 
 	gasPrice, err := client.SuggestGasPrice(ctx)
 	printError("Error gas price", err)
@@ -202,11 +193,14 @@ func sendResponse(client *ethclient.Client, contract *contract.OracleGo, nonce u
 	auth.GasLimit = uint64(3000000) // in units
 	auth.GasPrice = gasPrice
 
+	contractCaller.SetAbi(value)
+	cCaller, _ := contractCaller.NewOracle(callerAddress, client)
+
 	//Answer0 is the function to send strings, answer for bools and answer1 for ints
-	tx, err := contract.Answer0(auth, petitionID, value)
+	tx, err := cCaller.Callback(auth, value)
 	printError("Error response transaction", err)
 
-	nonce++
+	//nonce++
 
 	fmt.Printf("tx sent: %s", tx.Hash().Hex()) // tx sent: 0x8d490e535678e9a24360e955d75b27ad307bdfb97a1dca51d0f3035dcee3e870
 }

@@ -3,8 +3,6 @@ pragma solidity ^0.5.1;
 contract OracleEj {
     address payable owner;
 
-    Caller callerInt;
-
     //Si true, direcciones autorizas a ejecutar llamadas sin necesidad de pagar
     mapping(address => bool) WhiteList;
 

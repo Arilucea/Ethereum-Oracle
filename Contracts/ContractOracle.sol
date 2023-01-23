@@ -1,9 +1,10 @@
-pragma solidity ^0.5.1;
+// SPDX-License-Identifier: GPL-3.0
+pragma solidity ^0.8.10;
 
-contract OracleEj {
+contract Oracle {
     address payable owner;
 
-    //Si true, direcciones autorizas a ejecutar llamadas sin necesidad de pagar
+    //Addresses authorized to send petition without paying the fee
     mapping(address => bool) WhiteList;
 
     //Petititon cost
@@ -11,8 +12,8 @@ contract OracleEj {
 
     event Petition(address caller, string mType, string message);
 
-    constructor () public {
-        owner = msg.sender;
+    constructor () {
+        owner = payable(msg.sender);
     }
 
     /**
@@ -20,7 +21,7 @@ contract OracleEj {
      * @param _message information of the request
      * @param _type type of request
      */
-    function makePetition(string memory _message, string memory _type) public payable isContract {
+    function makePetition(string memory _message, string memory _type) external payable isContract {
         require(WhiteList[msg.sender] == true || msg.value >= price, "No enough value or whitelist");
         emit Petition(msg.sender, _type, _message);
     }
@@ -30,7 +31,7 @@ contract OracleEj {
      * @param _address address to change
      * @param _state true/false add/remove from the whitelist
      */
-    function changeWhiteList(address _address, bool _state) public onlyOwner {
+    function changeWhiteList(address _address, bool _state) external onlyOwner {
         WhiteList[_address] = _state;
     }
 
@@ -62,11 +63,11 @@ contract OracleEj {
      * @dev change the price of each the requests
      * @param _newPrice new price in weis
      */
-    function changePrize(uint256 _newPrice) public onlyOwner {
+    function changePrize(uint256 _newPrice) external onlyOwner {
         price = _newPrice;
     }
 
-    function getEth() public onlyOwner {
+    function getEth() external onlyOwner {
         owner.transfer(address(this).balance);
     }
 

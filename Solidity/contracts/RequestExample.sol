@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.10;
 
-interface Oracle {
+interface IOracle {
     function makePetition(string calldata _message, string calldata _type) external payable;
 }
 
 contract PetitionExample {
 
-    Oracle oracleInt;
+    IOracle oracleInt;
     uint public datoInt;
     string public datoString;
     address owner;
 
     constructor(address _oracle) {
-        oracleInt = Oracle(_oracle);
+        oracleInt = IOracle(_oracle);
         owner = msg.sender;
 
     }
@@ -37,7 +37,7 @@ contract PetitionExample {
 
     function changeOracle(address _oracle) public {
         require(msg.sender == owner, "Not the owner");
-        oracleInt = Oracle(_oracle);
+        oracleInt = IOracle(_oracle);
     }
 
 }

@@ -6,7 +6,7 @@ import {OwnableStorage} from "./Storage/OwnableStorage.sol";
 
 contract Oracle {
 
-    event Petition(address caller, string mType, string message);
+    event Petition(address caller, string message, string mType);
 
     /**
      * @dev recieves a request an event with the information
@@ -16,7 +16,7 @@ contract Oracle {
     function makePetition(string memory _message, string memory _type) external payable isContract {
         OracleStorage.Layout storage l = OracleStorage.oracleStorage();
         require(l.WhiteList[msg.sender] == true || msg.value >= l.price, "No enough value or whitelist");
-        emit Petition(msg.sender, _type, _message);
+        emit Petition(msg.sender, _message, _type);
     }
 
     /**

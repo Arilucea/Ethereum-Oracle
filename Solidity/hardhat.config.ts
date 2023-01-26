@@ -1,7 +1,11 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import "@nomiclabs/hardhat-ethers";
+import dotenv from "dotenv";
 
-const config: HardhatUserConfig = {
+dotenv.config({path: __dirname + "/.env"})
+
+module.exports = {
   solidity: {
     version: "0.8.17",
     settings: {
@@ -12,15 +16,9 @@ const config: HardhatUserConfig = {
     }
   },
   networks: {
-    hardhat: {
-      accounts: {
-        count: 10
-      }
-    },
-    localhost: {
-      url: "http://localhost:8545"
+    mumbai: {
+      url: process.env.MUMBAI_URL,
+      accounts: [process.env.SECRET]
     }
   }
 };
-
-export default config;

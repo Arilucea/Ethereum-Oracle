@@ -1,20 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.10;
 
+import {OracleStorage} from "./Storage/OracleStorage.sol";
+import {OwnableStorage} from "./Storage/OwnableStorage.sol";
+
 contract Oracle {
-    address payable owner;
 
-    //Addresses authorized to send petition without paying the fee
-    mapping(address => bool) WhiteList;
-
-    //Petititon cost
-    uint256 public price = 0.00 ether;
-
-    event Petition(address caller, string mType, string message);
-
-    constructor () {
-        owner = payable(msg.sender);
-    }
+    event Petition(address caller, string message, string mType);
 
     /**
      * @dev recieves a request an event with the information
@@ -22,8 +14,9 @@ contract Oracle {
      * @param _type type of request
      */
     function makePetition(string memory _message, string memory _type) external payable isContract {
-        require(WhiteList[msg.sender] == true || msg.value >= price, "No enough value or whitelist");
-        emit Petition(msg.sender, _type, _message);
+        OracleStorage.Layout storage l = OracleStorage.oracleStorage();
+        require(l.WhiteList[msg.sender] == true || msg.value >= l.price, "No enough value or whitelist");
+        emit Petition(msg.sender, _message, _type);
     }
 
     /**
@@ -32,11 +25,28 @@ contract Oracle {
      * @param _state true/false add/remove from the whitelist
      */
     function changeWhiteList(address _address, bool _state) external onlyOwner {
-        WhiteList[_address] = _state;
+        OracleStorage.Layout storage l = OracleStorage.oracleStorage();
+        l.WhiteList[_address] = _state;
     }
 
     //--------------------Utils---------------------//
 
+    event OwnershipChanged(address previousOwner, address newOwner);
+
+    function owner() external view returns(address) {
+        return _owner();
+    }
+
+    function _owner() internal view returns(address) {
+        return OwnableStorage.ownableStorage().owner;
+    }
+
+    function transferOwnership(address _newOwner) external onlyOwner {
+        OwnableStorage.Layout storage l = OwnableStorage.ownableStorage();
+        address previousOwner = l.owner;
+        l.owner = payable(_newOwner);
+        emit OwnershipChanged(previousOwner, _newOwner);
+    }
 
     //--------------------Modifiers---------------------//
 
@@ -52,7 +62,7 @@ contract Oracle {
     }
 
     modifier onlyOwner(){
-        require(msg.sender == owner, "Not the owner");
+        require(msg.sender == _owner(), "Not the owner");
         _;
     }
 
@@ -64,11 +74,13 @@ contract Oracle {
      * @param _newPrice new price in weis
      */
     function changePrize(uint256 _newPrice) external onlyOwner {
-        price = _newPrice;
+        OracleStorage.Layout storage l = OracleStorage.oracleStorage();
+        l.price = _newPrice;
     }
 
     function getEth() external onlyOwner {
-        owner.transfer(address(this).balance);
+        (bool success, ) = (_owner()).call{value: address(this).balance}("");
+        require(success == true, "Currency transfer fail");
     }
 
     //"https://api.coinmarketcap.com/v1/ticker/ethereum/(|0.price_usd)json", "URL/JSON"
